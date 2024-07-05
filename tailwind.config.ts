@@ -16,14 +16,12 @@ const config: Config = {
       typography: {
         DEFAULT: {
           css: {
-            maxWidth: '100%', // add required value here
-          }
-        }
-      }
+            maxWidth: "100%", // add required value here
+          },
+        },
+      },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require("@tailwindcss/typography")],
 };
 export default config;

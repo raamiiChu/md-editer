@@ -17,10 +17,11 @@ const ReactMarkdownEditor = () => {
 
   return (
     <main className="space-y-4">
-      <Link 
-        href="/" 
-        className="border-2 p-2 hover:bg-black hover:text-white transition-all">
-          {"<"} Home
+      <Link
+        href="/"
+        className="border-2 p-2 hover:bg-black hover:text-white transition-all"
+      >
+        {"<"} Home
       </Link>
       <section className="divide-y-2">
         <h1 className="text-3xl font-bold">Editor</h1>
@@ -28,7 +29,7 @@ const ReactMarkdownEditor = () => {
           <MarkdownEditor
             value={markdown}
             onChange={(value, viewUpdate) => {
-              setMarkdown(value)
+              setMarkdown(value);
             }}
             className="h-96 py-4"
           />

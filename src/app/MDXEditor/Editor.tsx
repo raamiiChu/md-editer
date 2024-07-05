@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import i18next from 'i18next';
+import i18next from "i18next";
 import * as zhTw from "./zh-tw.json" assert { type: "json" };
 
 import {
@@ -9,7 +9,7 @@ import {
   listsPlugin,
   quotePlugin,
   thematicBreakPlugin,
-  markdownShortcutPlugin, 
+  markdownShortcutPlugin,
   toolbarPlugin,
   MDXEditor,
   UndoRedo,
@@ -32,39 +32,33 @@ import {
   imagePlugin,
   InsertImage,
   CreateLink,
-  linkDialogPlugin
-} from '@mdxeditor/editor';
+  linkDialogPlugin,
+} from "@mdxeditor/editor";
 
-import '@mdxeditor/editor/style.css';
-
-interface EditorProps {
-  editorRef?: React.MutableRefObject<MDXEditorMethods | null>;
-}
+import "@mdxeditor/editor/style.css";
 
 void i18next.init({
-  lng: 'zhTw', // if you're using a language detector, do not define the lng option
+  lng: "zhTw", // if you're using a language detector, do not define the lng option
   debug: true,
   resources: {
     zhTw: {
-      translation: zhTw
-    }
-  }
-})
+      translation: zhTw,
+    },
+  },
+});
 
 async function imageUploadHandler(image: File) {
-  const formData = new FormData()
-  formData.append('image', image)
+  const formData = new FormData();
+  formData.append("image", image);
   // send the file to your server and return
   // the URL of the uploaded image in the response
-  const response = await fetch('/uploads/new', {
-    method: 'POST',
-    body: formData
-  })
-  const json = (await response.json()) as { url: string }
-  return json.url
+  const response = await fetch("/uploads/new", {
+    method: "POST",
+    body: formData,
+  });
+  const json = (await response.json()) as { url: string };
+  return json.url;
 }
-
-const mdStr = `# This is a H1  \n## This is a H2  \n###### This is a H6`;
 
 const defaultSnippetContent = `
 export default function App() {
@@ -75,26 +69,31 @@ export default function App() {
     </div>
   );
 }
-`.trim()
-
+`.trim();
 
 const simpleSandpackConfig: SandpackConfig = {
-  defaultPreset: 'react',
+  defaultPreset: "react",
   presets: [
     {
-      label: 'React',
-      name: 'react',
-      meta: 'live react',
-      sandpackTemplate: 'react',
-      sandpackTheme: 'light',
-      snippetFileName: '/App.js',
-      snippetLanguage: 'jsx',
-      initialSnippetContent: defaultSnippetContent
+      label: "React",
+      name: "react",
+      meta: "live react",
+      sandpackTemplate: "react",
+      sandpackTheme: "light",
+      snippetFileName: "/App.js",
+      snippetLanguage: "jsx",
+      initialSnippetContent: defaultSnippetContent,
     },
-  ]
+  ],
+};
+
+interface EditorProps {
+  editorRef?: React.MutableRefObject<MDXEditorMethods | null>;
 }
 
-const Editor = ({ editorRef }: EditorProps) => {  
+const mdStr = `# This is a H1  \n## This is a H2  \n###### This is a H6`;
+
+const Editor = ({ editorRef }: EditorProps) => {
   const [markdown, setMarkdown] = useState(mdStr);
 
   return (
@@ -110,9 +109,11 @@ const Editor = ({ editorRef }: EditorProps) => {
         linkDialogPlugin(),
         thematicBreakPlugin(),
         markdownShortcutPlugin(),
-        codeBlockPlugin({defaultCodeBlockLanguage: 'js'}),
+        codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
         sandpackPlugin({ sandpackConfig: simpleSandpackConfig }),
-        codeMirrorPlugin({ codeBlockLanguages: { txt: "Text", js: 'JavaScript', css: 'CSS' } }),
+        codeMirrorPlugin({
+          codeBlockLanguages: { txt: "Text", js: "JavaScript", css: "CSS" },
+        }),
         toolbarPlugin({
           toolbarContents: () => (
             <>
@@ -121,12 +122,22 @@ const Editor = ({ editorRef }: EditorProps) => {
               <BoldItalicUnderlineToggles />
               <ConditionalContents
                 options={[
-                  { when: (editor) => editor?.editorType === 'codeblock', contents: () => <ChangeCodeMirrorLanguage /> },
-                  { when: (editor) => editor?.editorType === 'sandpack', contents: () => <ShowSandpackInfo /> },
-                  { fallback: () => ( <> 
-                    <InsertCodeBlock />
-                    <InsertSandpack />
-                  </>)}
+                  {
+                    when: (editor) => editor?.editorType === "codeblock",
+                    contents: () => <ChangeCodeMirrorLanguage />,
+                  },
+                  {
+                    when: (editor) => editor?.editorType === "sandpack",
+                    contents: () => <ShowSandpackInfo />,
+                  },
+                  {
+                    fallback: () => (
+                      <>
+                        <InsertCodeBlock />
+                        <InsertSandpack />
+                      </>
+                    ),
+                  },
                 ]}
               />
               <Separator />
@@ -137,13 +148,13 @@ const Editor = ({ editorRef }: EditorProps) => {
               <Separator />
               <BlockTypeSelect />
             </>
-          )
-        })
+          ),
+        }),
       ]}
       ref={editorRef}
       markdown={markdown}
       translation={(key, defaultValue, interpolations) => {
-        return i18next.t(key, defaultValue, interpolations) as string
+        return i18next.t(key, defaultValue, interpolations) as string;
       }}
     />
   );

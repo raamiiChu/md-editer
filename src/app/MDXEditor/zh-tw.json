@@ -99,7 +99,7 @@
     "language": "程式碼區塊語言",
     "selectLanguage": "選擇程式碼區塊語言"
   },
-  "contentArea":{
+  "contentArea": {
     "editableMarkdown": "可編輯的 Markdown"
   }
 }
